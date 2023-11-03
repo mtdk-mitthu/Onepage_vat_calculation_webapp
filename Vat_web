@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+	 display: flex;
+    flex-direction: column;
+    align-items: center;
+
+        }
+.content{
+display:flex;
+}
+
+.vat_option {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 200px;
+margin-right:20px;
+margin-top=0px;
+}
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+	    margin: 10px;
+	    margin color: white;
+
+	  background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
+	
+    </style>
+</head>
+<body>
+<!-- hello -->
+
+<div class="content">
+
+<div class="vat_option">
+    <div class="container">
+        <h2>Calculator Options</h2>
+        <button id="vatBtn" onclick="showVATCalculator()">VAT Calculator</button>
+        <button id="priceBtn" onclick="showPriceCalculator()">Ev200 Ah Calculator</button>
+    </div>
+</div>
+
+<div class="Calculator">
+    <div class="container" id="vatCalculator" style="display: none;">
+        <h2>VAT Calculator</h2>
+        <label for="itemQty">How many items:</label>
+        <input type="number" id="itemQty">
+        <label for="itemPrice">How much price:</label>
+        <input type="number" id="itemPrice">
+        <label for="vatRate">Enter VAT rate (in percentage):</label>
+        <input type="number" id="vatRate" placeholder="e.g., 20">
+        <button onclick="calculateTotalVAT()">Calculate</button>
+        <p>Total without VAT: <span id="resultWithoutVAT"></span></p>
+	<p>Total VAT: <span id="VatAmount"></span></p>
+        <p>Total amount with VAT: <span id="resultWithVAT"></span></p>
+	
+    </div>
+
+    <div class="container" id="priceCalculator" style="display: none;">
+        <h2>Price Calculator</h2>
+        <label for="pcs">How many pcs (Ev-200 AH):</label>
+        <input type="number" id="pcs">
+        <button onclick="calculateTotalPrice()">Calculate</button>
+        <p>Total Item: <span id="totalItem"></span></p>
+        <p>Total price without VAT: <span id="totalPriceWithoutVAT"></span></p>
+        <p>VAT (15%): <span id="vatAmount"></span></p>
+        <p>Total price with VAT: <span id="totalPriceWithVAT"></span></p>
+    </div>
+</div>
+</div>
+    <script>
+
+  function showVATCalculator() {
+            document.getElementById("vatCalculator").style.display = "block";
+            document.getElementById("priceCalculator").style.display = "none";
+        }
+
+        function showPriceCalculator() {
+            document.getElementById("priceCalculator").style.display = "block";
+            document.getElementById("vatCalculator").style.display = "none";
+        }
+
+        function calculateTotalVAT() {
+            var pcs = parseInt(document.getElementById("itemQty").value);
+            var itemPrice = parseFloat(document.getElementById("itemPrice").value);
+            var vatRate = parseFloat(document.getElementById("vatRate").value);
+            var withoutVAT = pcs * itemPrice;
+            var vat = (withoutVAT * vatRate) / 100;
+            var totalAmount = withoutVAT + vat;
+	    var VatAmount = vat.toFixed(2);
+
+            document.getElementById("resultWithoutVAT").textContent = withoutVAT.toFixed(2);
+            document.getElementById("resultWithVAT").textContent = totalAmount.toFixed(2);
+	    document.getElementById("VatAmount").textContent = VatAmount;
+        }
+
+        function calculateTotalPrice() {
+            var pcs = parseInt(document.getElementById("pcs").value);
+            var itemPrice = 4639.95;
+            var total_price = pcs * itemPrice;
+            var vat = total_price * 0.15;
+            var intotal = total_price + vat;
+
+            document.getElementById("totalItem").textContent = pcs;
+            document.getElementById("totalPriceWithoutVAT").textContent = total_price.toFixed(2);
+            document.getElementById("vatAmount").textContent = vat.toFixed(2);
+            document.getElementById("totalPriceWithVAT").textContent = intotal.toFixed(2);
+        }
+    </script>
+</body>
+</html>
